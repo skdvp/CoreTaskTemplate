@@ -25,7 +25,9 @@ public class Main {
         connection.commit();
 
         userService.getAllUsers();
+
         userService.removeUserById(2L);
+        connection.commit();
 
         userService.cleanUsersTable();
         connection.commit();
