@@ -2,7 +2,6 @@ package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
-import jm.task.core.jdbc.util.Util;
 
 import java.sql.*;
 
@@ -10,33 +9,22 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        Connection connection = new Util().getConnection();
-        connection.setAutoCommit(false);
-
         UserService userService = new UserServiceImpl();
 
         userService.createUsersTable();
-        connection.commit();
 
         userService.saveUser("Bob", "Robson", (byte) 50);
         userService.saveUser("Sam", "Jackson", (byte) 40);
         userService.saveUser("Paul", "Smith", (byte) 30);
         userService.saveUser("Jack", "London", (byte) 20);
-        connection.commit();
 
         userService.getAllUsers();
 
         userService.removeUserById(2L);
-        connection.commit();
 
         userService.cleanUsersTable();
-        connection.commit();
 
         userService.dropUsersTable();
-        connection.commit();
-
-        connection.close();
-
 
     }
 }

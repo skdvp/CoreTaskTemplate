@@ -14,10 +14,10 @@ public class Util {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, user, password);
-            System.out.println("----------------------------------------------------");
+            System.out.println("Соединение установлено");
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Connection ERROR");
+            System.out.println("Соединение не установлено");
         }
         return connection;
     }
