@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserDaoJDBCImpl extends Util implements UserDao {
 
-    Connection connection = getConnection();
+    private Connection connection = getConnection();
 
     public UserDaoJDBCImpl() {
 
@@ -27,6 +27,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
                 System.out.println("Таблица создана (первая попытка)");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             try (Statement statement = connection.createStatement()) {
                 statement.executeUpdate("DROP TABLE users");
                 System.out.println("Удаление предыдущей таблицы");
