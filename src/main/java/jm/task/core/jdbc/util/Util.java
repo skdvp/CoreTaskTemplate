@@ -3,7 +3,9 @@ package jm.task.core.jdbc.util;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -31,14 +33,17 @@ public class Util {
 
     /* ================ Hibernate methods ================ */
 
-    public SessionFactory getFactory() {
+    private static SessionFactory sessionFactory;
 
-        SessionFactory factory = new Configuration()
-                .addProperties(hibernateProperties())
-                .addAnnotatedClass(User.class)
-                .buildSessionFactory();
-        System.out.println("Фабрика создана!");
-        return factory;
+    public SessionFactory getFactory() {
+        Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(User.class);
+        configuration.addProperties(hibernateProperties());
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties()).build();
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+
+        return sessionFactory;
     }
 
     public Properties hibernateProperties() {
