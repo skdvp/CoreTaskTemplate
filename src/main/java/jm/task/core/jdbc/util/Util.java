@@ -33,17 +33,13 @@ public class Util {
 
     /* ================ Hibernate methods ================ */
 
-    private static SessionFactory sessionFactory;
-
     public SessionFactory getFactory() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(User.class);
         configuration.addProperties(hibernateProperties());
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-
-        return sessionFactory;
+        return configuration.buildSessionFactory(serviceRegistry);
     }
 
     public Properties hibernateProperties() {
